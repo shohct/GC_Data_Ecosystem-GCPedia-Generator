@@ -1,4 +1,4 @@
-[[File:GCCollab GCDC Banner.png|700px|centre]]
+[[File:GCPedia Banner 1500x300 Data Ecosystem BIL (002).png|centre]]
 <html>
 <head>
   <meta charset="UTF-8">
@@ -6,7 +6,6 @@
     .headercontainer {
         margin: auto;
     }
-
     .headermenu {
       text-align: center;
       font-weight: bold;
@@ -17,14 +16,12 @@
       width: 100%;
       height: 4em;
     }
-
     .headeritem {
       border-left: 0.25ch solid white;
       border-right: 0.25ch solid white;
       padding: 0.5ch;
       color: white;
     }
-
     .headeritem  a {
       color: white;
     }
@@ -47,7 +44,25 @@
 </body>
 </html>
 
-The Data Resource Directory is a collaborative reference based catalogue of data resources created for and maintained by data practitioners. Please email {% raw %}{{em|madina.ibragimova@csps-efpc.gc.ca}} {% endraw %} if you have any questions pertaining this page.
+The GC data ecosystem project seeks to build a chart and a directory of data-related entities within and connected to the federal government. Launched in 2021, the goal is to help data practitioners across the GC to access relevant data-related resources, identify opportunities to collaborate and share knowledge, and improve understanding of departmental data priorities and activities. The project is co-led by the Privy Council Office Results & Delivery Unit and the GC Data Community. hosted at the Canada School of Public Service.<br />
+
+[[File:GC Data Ecosystem context.jpg|Left]]<br />
+
+The primary purpose of the Data Ecosystem Resource Directory (DERD) is to provide data practitioners with easier access to data-related resources across the GC Data Ecosystem. This is a community-run, collaborative project which relies upon YOUR inputs and updates. We hope to continue increasing and improving the accuracy of the inventory through your contributions. We are always looking for collaboration opportunities and volunteers to help with this initiative.<br />
+
+
+'''Current status'''<br />
+
+The current iteration of the GCPedia page offers users a simplified view and allows navigation through categories and subcategories of 400+ hyperlinked resources accompanied by short descriptions. The GCpedia page also hosts a catalogue of data-related GC glossaries and dictionaries, as well as Top-20 universal data terms and definitions.
+
+'''How to contribute'''<br />
+
+Anyone can suggest a new entry or a change to an existing entry. While we are working on the automation of this process, you can send an e-mail with the proposed change to madina.ibragimova@csps-efpc.gc.ca. In your e-mail, identify the title, short description and URL to the resource you want to add. If the resource is available in French, please provide the details in French.
+
+'''How to Use the Directory'''<br />
+
+To navigate through the collection of resources, we suggest viewers use the categories at the top of the page. Each dedicated tab has a list of resources organized alphabetically and based on subcategories. Lists are collapsible and can be hidden.
+
 
 Version française à suivre. 
 
@@ -59,17 +74,33 @@ __NOTOC__
 {% raw -%}
 {{Collapsible list
 {% endraw -%}
-| title = {{cat}}
+| title = <br />
 | bullets = 
+{% set subcat = namespace(name=0) %}
 {% for ent in entries -%}
+{% if subcat.name != ent.subtype %}
+{% if subcat.name != 0 %}
+</ol>
+{% endif -%}
+{% set subcat.name = ent.subtype %}
+{{"| "}}<br /><big>{{"'''"}}{{ent.subtype}}{{"'''"}}</big> <ol>
+{% endif -%}
 {% if ent.url -%}
-{{"| "}}<html><a href={{ent.url}}>{{ent.name}}</a></html>
+{% if ent.desc -%}
+{{": '''"}}<html><a href={{ent.url}}>{{ent.name}}</a></html>{{"''' - " + ent.desc}}
 {% else -%}
-{{"| " + ent.name }}
+{{": '''"}}<html><a href={{ent.url}}>{{ent.name}}{{"'''"}}</a></html>
+{% endif -%}
+{% else -%}
+{% if ent.desc -%}
+{{": '''"}}{{ent.name}}{{"''' - " + ent.desc}}
+{% else -%}
+{{": '''"}}{{ent.name}}{{"'''"}}
+{% endif -%}
 {% endif -%}
 {% endfor -%}
 {% raw -%}
 }}
 {% endraw -%}
+</ol>
 {% endfor %}
-
