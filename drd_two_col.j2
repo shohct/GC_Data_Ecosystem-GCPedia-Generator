@@ -1,0 +1,122 @@
+[[File:GCPedia Banner 1500x300 Data Ecosystem BIL (002).png|centre]]
+<html>
+<head>
+  <meta charset="UTF-8">
+<style>
+    .headercontainer {
+        margin: auto;
+    }
+    .headermenu {
+      text-align: center;
+      font-weight: bold;
+      font-family: Arial;
+      background-color: #4B088A;
+      table-layout: fixed;
+      border-collapse: collapse;
+      width: 100%;
+      height: 4em;
+    }
+    .headeritem {
+      border-left: 0.25ch solid white;
+      border-right: 0.25ch solid white;
+      padding: 0.5ch;
+      color: white;
+    }
+    .headeritem  a {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <table class="headermenu">
+      <div class="headercontainer">
+        <tr>
+          {% for cat in data.keys() %}
+              <td class="headeritem">
+                  <a href="{{gen_url(cat)}}">
+                      {{format_link_text(cat)}}
+                  </a>
+              </td> 
+          {%- endfor %}
+        </tr>
+      </div>
+  </table>
+</body>
+</html>
+
+<div style="margin-left: 50px; margin-right: 50px;>
+The GC data ecosystem project seeks to build a chart and a directory of data-related entities within and connected to the federal government. Launched in 2021, the goal is to help data practitioners across the GC to access relevant data-related resources, identify opportunities to collaborate and share knowledge, and improve understanding of departmental data priorities and activities. The project is co-led by the Privy Council Office Results & Delivery Unit and the GC Data Community. hosted at the Canada School of Public Service.<br />
+</div>
+
+[[File:Data Ecosystem project image 2.jpg|centre]]<br />
+
+<div style="margin-left: 50px; margin-right: 50px;>
+The primary purpose of the Data Ecosystem Resource Directory (DERD) is to provide data practitioners with easier access to data-related resources across the GC Data Ecosystem. This is a community-run, collaborative project which relies upon YOUR inputs and updates. We hope to continue increasing and improving the accuracy of the inventory through your contributions. We are always looking for collaboration opportunities and volunteers to help with this initiative.<br />
+</div>
+
+<br />
+
+'''Current status'''<br />
+
+<div style="margin-left: 50px; margin-right: 50px;>
+The current iteration of the GCPedia page offers users a simplified view and allows navigation through categories and subcategories of 400+ hyperlinked resources accompanied by short descriptions. The GCpedia page also hosts a catalogue of data-related GC glossaries and dictionaries, as well as Top-20 universal data terms and definitions.
+</div>
+
+'''How to contribute'''<br />
+
+<div style="margin-left: 50px; margin-right: 50px;>
+Anyone can suggest a new entry or a change to an existing entry. While we are working on the automation of this process, you can send an e-mail with the proposed change to madina.ibragimova@csps-efpc.gc.ca. In your e-mail, identify the title, short description and URL to the resource you want to add. If the resource is available in French, please provide the details in French.
+If you wish to join the team that works on this project, fill out this [https://forms.office.com/r/6EnvHwWzP6 form]. 
+</div>
+
+'''How to Use the Directory'''<br />
+
+<div style="margin-left: 50px; margin-right: 50px;>
+To navigate through the collection of resources, we suggest viewers use the categories at the top of the page. Each dedicated tab has a list of resources organized alphabetically and based on subcategories. Lists are collapsible and can be hidden.
+</div>
+
+<br /><br />
+
+Accédez à cette page en français  [https://www.gcpedia.gc.ca/wiki/R%C3%A9pertoire_des_ressources_de_l%27%C3%A9cosyst%C3%A8me_des_donn%C3%A9es_(RRED)# ici].  
+
+__NOTOC__
+
+{% for cat, entries in data.items() %}
+== {{cat}} ==
+
+{% raw -%}
+{{Collapsible list
+{% endraw -%}
+| title = <br />
+| bullets =
+{% set subcat = namespace(name=0) %}
+{% for ent in entries -%}
+{% if subcat.name != ent.subtype %}
+{% if subcat.name != 0 %}
+{{"}}"}}
+</ol>
+{% endif -%}
+{% set subcat.name = ent.subtype %}
+{{"| "}}<br /><big>{{"'''"}}{{ent.subtype}}{{"'''"}}</big> <ol>
+{{"{"}}{columns-list|colwidth=35em|
+{% endif -%}
+{% if ent.url -%}
+{% if ent.desc -%}
+{{": '''"}}<html><a href={{ent.url}}>{{ent.name}}</a></html>{{"''' - " + ent.desc}}
+{% else -%}
+{{": '''"}}<html><a href={{ent.url}}>{{ent.name}}</a></html>{{"'''"}}
+{% endif -%}
+{% else -%}
+{% if ent.desc -%}
+{{": '''"}}{{ent.name}}{{"''' - " + ent.desc}}
+{% else -%}
+{{": '''"}}{{ent.name}}{{"'''"}}
+{% endif -%}
+{% endif -%}
+{% endfor -%}
+{{"}}"}}
+</ol>
+{% raw -%}
+}}
+{% endraw -%}
+{% endfor %}

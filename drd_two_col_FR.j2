@@ -1,0 +1,137 @@
+Cette page est en cours de construction
+[[File:GCPedia Banner 1500x300 Data Ecosystem BIL (002).png|centre]]<br />
+<html>
+<head>
+  <meta charset="UTF-8">
+<style>
+    .headercontainer {
+        margin: auto;
+    }
+    .headermenu {
+      text-align: center;
+      font-weight: bold;
+      font-family: Arial;
+      background-color: #4B088A;
+      table-layout: fixed;
+      border-collapse: collapse;
+      width: 100%;
+      height: 4em;
+    }
+    .headeritem {
+      border-left: 0.25ch solid white;
+      border-right: 0.25ch solid white;
+      padding: 0.5ch;
+      color: white;
+    }
+    .headeritem  a {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <table class="headermenu">
+      <div class="headercontainer">
+        <tr>
+          <td class="headeritem">
+                  <a href="#Projets.2FInitiatives">
+                      Projets et Initiatives
+                  </a>
+              </td><td class="headeritem">
+                  <a href="#Instruments_de_politique">
+                      Instruments de politique
+                  </a>
+              </td><td class="headeritem">
+                  <a href="#Ressources_d'apprentissage">
+                     Ressources d'apprentissage
+                  </a>
+              </td><td class="headeritem">
+                  <a href="#Organisations_et_équipes">
+                      Organisations et équipes
+                  </a>
+              </td><td class="headeritem">
+                  <a href="#Communautés ">
+                      Communautés 
+                  </a>
+              </td><td class="headeritem">
+                  <a href="#Glossaires_de_données">
+                      Glossaires de données
+                  </a>
+              </td>
+        </tr>
+      </div>
+  </table>
+</body>
+</html>
+
+<div style="margin-left: 50px; margin-right: 50px;>
+Le projet d'écosystème de données du GC vise à établir un tableau et un répertoire des entités liées aux données au sein du gouvernement fédéral et connectées à celui-ci. Lancé en 2021, l'objectif est d'aider les praticiens des données de l'ensemble du GC à accéder aux ressources pertinentes liées aux données, à identifier les possibilités de collaboration et de partage des connaissances, et à améliorer la compréhension des priorités et des activités ministérielles en matière de données. Le projet est codirigé par l'Unité des résultats et de la prestation du Bureau du Conseil privé et la Communauté de données du GC hébergée à l'École de la fonction publique du Canada.<br />
+</div>
+
+[[File:Ecosysteme_de_donnees_Fr.png|900px|centre]]<br />
+
+<div style="margin-left: 50px; margin-right: 50px;>
+L'objectif principal du Répertoire de ressources de l'écosystème de données (RRED) est de fournir aux praticiens des données un accès plus facile aux ressources liées aux données dans l'écosystème de données du GC. Il s'agit d'un projet collaboratif géré par la communauté, qui dépend de VOS contributions et de vos mises à jour. Nous espérons continuer à accroître et à améliorer la précision de l'inventaire grâce à vos contributions. Nous sommes toujours à la recherche de possibilités de collaboration et de bénévoles pour nous aider dans cette initiative.<br />
+</div>
+
+<br />
+
+'''Situation actuelle'''<br />
+
+<div style="margin-left: 50px; margin-right: 50px;>
+L'itération actuelle de la page GCPedia offre aux utilisateurs une vue simplifiée et permet la navigation à travers des catégories et sous-catégories de plus de 400 ressources hyperliées accompagnées de courtes descriptions. La page GCpedia héberge également un catalogue de glossaires et de dictionnaires GC liés aux données, ainsi que le Top-20 des termes et définitions de données universelles.
+</div>
+
+'''Comment contribuer'''<br />
+
+<div style="margin-left: 50px; margin-right: 50px;>
+Tout le monde peut suggérer une nouvelle entrée ou une modification d'une entrée existante. Pendant que nous travaillons à l'automatisation de ce processus, vous pouvez envoyer un courriel avec la modification proposée à madina.ibragimova@csps-efpc.gc.ca. Dans votre courriel, indiquez le titre, une brève description et l'URL de la ressource que vous souhaitez ajouter. Si la ressource est disponible en français, veuillez fournir les détails en français.
+Si vous souhaitez rejoindre l'équipe qui travaille sur ce projet, remplissez ce [https://forms.office.com/r/tLUpYx2YVg formulaire]. 
+</div>
+
+'''Comment utiliser le répertoirey'''<br />
+
+<div style="margin-left: 50px; margin-right: 50px;>
+Pour naviguer dans la collection de ressources, nous suggérons aux internautes d'utiliser les catégories situées en haut de la page. Chaque onglet dédié comporte une liste de ressources organisées par ordre alphabétique et par sous-catégories. Les listes sont repliables et peuvent être masquéesn.
+</div>
+
+__NOTOC__
+
+{% for cat, entries in data.items() %}
+== {{cat}} ==
+
+{% raw -%}
+{{Collapsible list
+{% endraw -%}
+| title = <br />
+| bullets =
+{% set subcat = namespace(name=0) %}
+{% for ent in entries -%}
+{% if subcat.name != ent.subtype %}
+{% if subcat.name != 0 %}
+{{"}}"}}
+</ol>
+{% endif -%}
+{% set subcat.name = ent.subtype %}
+{{"| "}}<br /><big>{{"'''"}}{{ent.subtype}}{{"'''"}}</big> <ol>
+{{"{"}}{columns-list|colwidth=35em|
+{% endif -%}
+{% if ent.url -%}
+{% if ent.desc -%}
+{{": '''"}}<html><a href={{ent.url}}>{{ent.name}}</a></html>{{"''' - " + ent.desc}}
+{% else -%}
+{{": '''"}}<html><a href={{ent.url}}>{{ent.name}}</a></html>{{"'''"}}
+{% endif -%}
+{% else -%}
+{% if ent.desc -%}
+{{": '''"}}{{ent.name}}{{"''' - " + ent.desc}}
+{% else -%}
+{{": '''"}}{{ent.name}}{{"'''"}}
+{% endif -%}
+{% endif -%}
+{% endfor -%}
+{{"}}"}}
+</ol>
+{% raw -%}
+}}
+{% endraw -%}
+{% endfor %}
