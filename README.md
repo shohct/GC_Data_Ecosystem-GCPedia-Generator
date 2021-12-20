@@ -13,6 +13,6 @@ positional arguments:
 
 optional arguments:
   -h, --help  show this help message and exit
-  -o OUTPUT   Destination file to write to. Defaults to stdout.
+  -o OUTPUT   Destination file to write to. Defaults to txt file.
 ```
 
