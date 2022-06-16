@@ -39,8 +39,7 @@ def df_to_elem(group) -> list:
 def load_data(path) -> dict:
     # Initialize dataframe
     df = (
-        pd.read_csv(path, usecols=["Label", "Type", "SubType", "URL", "Not4DERD",
-                                   "Short Description Eng"])  # read in columns from file
+        pd.read_csv(path, usecols=["Label", "Type", "SubType", "URL", "Not4DERD", "Description"])  # read in columns from file
         .dropna(subset=["Label", "SubType", "Type"])  # Discard Columns with NA values at Entity full name or Type
         .reset_index(drop=True)  # Discard Airtable indexing
     )
@@ -51,17 +50,21 @@ def load_data(path) -> dict:
     df["Type"] = df["Type"].str.strip()
     df["Entity Name"] = df["Label"].str.strip()
     df["Sub-Type"] = df["SubType"].str.strip()
-    df["Description"] = df["Short Description Eng"].str.strip()
+    df["Description"] = df["Description"].str.strip()
     df["Description"] = df["Description"].str.replace('\n', '')
     df["URL"] = df["URL"].str.strip()
 
     # Remove column "Entity Full Name" and column "Entity sub-type"
     df.drop("Label", axis=1, inplace=True)
     df.drop("SubType", axis=1, inplace=True)
-    df.drop("Short Description Eng", axis=1, inplace=True)
 
     df.sort_values(by=['Type', 'Sub-Type', 'Entity Name'], inplace=True)  # Sort alphabetically by type, then sub-type, then name
     df.reset_index(drop=True, inplace=True)  # Reset dataframe indices
+    
+    # Use split & explode
+    # df_long = (df.set_index(['Type', 'Description', 'URL', 'Entity Name'])
+    #            .apply(lambda x: x.str.split(',').explode())
+    #            .reset_index())
     
     new_rows = {"Type": [],  "URL": [], "Entity Name": [], "Sub-Type": [], "Description": []}  # Create dict entry with type, subtype, description, url, and entity name
 
